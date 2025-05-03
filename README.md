@@ -46,92 +46,103 @@ Deploy the website.
 Upload to GitHub Pages for free hosting.
 
 ## PROGRAM
-Calculator.js
+Calculator.jsx
 ```
 import React, { useState } from 'react';
-import './Calculator.css';
 
-const Calculator = () => {
-  const [input, setInput] = useState("");
+function Calculator() {
+  const [input, setInput] = useState('');
 
   const handleClick = (value) => {
-    setInput(input + value);
-  };
-
-  const handleClear = () => {
-    setInput("");
-  };
-
-  const handleCalculate = () => {
-    try {
-      setInput(eval(input).toString());
-    } catch {
-      setInput("Error");
+    if (value === '=') {
+      try {
+        setInput(eval(input).toString());
+      } catch {
+        setInput('Error');
+      }
+    } else if (value === 'C') {
+      setInput('');
+    } else {
+      setInput(input + value);
     }
   };
 
+  const buttons = ['7', '8', '9', '/', '4', '5', '6', '*',
+                   '1', '2', '3', '-', '0', '.', '=', '+', 'C'];
+
   return (
     <div className="calculator">
-      <input type="text" value={input} readOnly />
-      <div className="buttons">
-        <button onClick={handleClear}>C</button>
-        {[..."789/456*123-0.=+"].map((char) => (
-          <button key={char} onClick={() => (char === '=' ? handleCalculate() : handleClick(char))}>
-            {char}
-          </button>
+      <h3>Simple Calculator</h3>
+      <input value={input} readOnly className="display" />
+      <div className="button-grid">
+        {buttons.map((btn) => (
+          <button key={btn} onClick={() => handleClick(btn)}>{btn}</button>
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default Calculator;
+
 ```
 Calculator.css
 ```
 .calculator {
-  width: 300px;
-  margin: 100px auto;
-  padding: 20px;
-  background: #f0f0f0;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 250px;
+  margin: 40px auto;
+  padding: 15px;
+  text-align: center;
+  background-color: #000000;
+  border-radius: 8px;
 }
 
-.calculator input {
+.display {
   width: 100%;
-  height: 40px;
-  margin-bottom: 10px;
-  font-size: 1.2rem;
+  padding: 10px;
+  font-size: 18px;
   text-align: right;
-  padding: 5px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-.buttons {
+.button-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 6px;
 }
 
 button {
-  padding: 15px;
-  font-size: 1rem;
+  padding: 12px;
+  font-size: 16px;
   border: none;
   border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
   cursor: pointer;
-  transition: 0.3s;
 }
 
-button:hover {
-  background-color: #45a049;
+/* Colors */
+button:nth-child(n) {
+  background-color: #87ceeb; /* sky blue for default */
+  color: #000;
 }
+
+button:nth-child(4n) {
+  background-color: #ffb347; /* orange for operators */
+}
+
+button:nth-child(17), button:nth-child(18) {
+  background-color: #ff6961; /* red for C and = */
+  color: white;
+}
+
 ```
-App.js
+App.jsx
 ```
 import React from 'react';
 import Calculator from './Calculator';
+import './Calculator.css';
 
 function App() {
   return (
@@ -142,13 +153,14 @@ function App() {
 }
 
 export default App;
+
 ```
 
 
 
 ## OUTPUT
-![image](https://github.com/user-attachments/assets/202be8db-e831-4d0d-b820-f327e367d545)
-![image](https://github.com/user-attachments/assets/88aee12f-e32e-4817-b03f-4c8b70f98311)
+![image](https://github.com/user-attachments/assets/437897da-295e-4677-bd72-d2f85adcf0a9)
+![image](https://github.com/user-attachments/assets/3fabb192-8793-4f57-9d4a-60ebd508c1dc)
 
 
 ## RESULT
